@@ -17,7 +17,10 @@ function App() {
   const [ganador, setGanador] = useState(null)
   const movimientos = tablero.filter(Boolean).length
   const [modo, setModo] = useState(1)
-
+  const [historial, setHistorial] = useState([])
+  const [estadisticas, setEstadisticas] = useState([])
+  
+  //funcion para actualizar el tablero
   const updateTablero = (index) => {
     //si el cuadro ya esta seleccionado o si ya hay un ganador
     if(tablero[index] || ganador) return
@@ -36,7 +39,10 @@ function App() {
     if(nuevoGanador) {
       confetti()
       setGanador(nuevoGanador)
+      historial.push(nuevoGanador)
+      setHistorial(historial)
     } else if (comprobarEmpate(newTablero)) {
+      historial.push("EMPATE 🏳️")
       setGanador(false)
     }
   }
@@ -51,6 +57,11 @@ function App() {
 
   const handleModoJuego = (e) => {
     const modo = parseInt(e.target.value, 10)
+    if (modo === 2) {
+      TURNO.jugador2 = '🔵'
+    }else {
+      TURNO.jugador2 = '🤖'
+    }
     setModo(modo)
     REINICIAR()
   }
@@ -63,7 +74,19 @@ function App() {
   }, [turno])
 
   return (
-    <main className="tablero">
+    <main>
+      <div className="historial">
+        <h2>HISTORIAL</h2>
+        {
+          historial.map((ganador, index) => (
+            <div key={index} className="historial-item">
+              <span>{"JUEGO "+ (index + 1)}</span>
+              <span>{" "+ ganador}</span>
+            </div>
+          ))
+        }
+      </div>
+      <div className="tablero">
       <header>
         <h1>
           TIC TAC TOE
@@ -116,11 +139,10 @@ function App() {
           window.localStorage.removeItem('tablero')
           window.localStorage.removeItem('turno')
         }}>REINICIO</button>
-        <div>
-          {/* historial de partidas */}
-
-        </div>
       </footer>
+      </div>
+      <div>
+      </div>
     </main>   
   )
 }

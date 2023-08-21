@@ -2,7 +2,7 @@
 
 export const TURNO = {
     jugador1: '❌',
-    jugador2: '🔵'
+    jugador2: '🤖'
   }
   
 const COMB_GANADORAS = [
