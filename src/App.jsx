@@ -1,7 +1,8 @@
-import { useState } from "react" 
+import { useEffect, useState } from "react" 
 import confetti from "canvas-confetti"
 import Cuadro from "./components/Cuadro"
-import { TURNO, validarGanador, comprobarEmpate} from "./constants.js"
+import { TURNO, validarGanador, comprobarEmpate, jugarCPU} from "./constants.js"
+
 
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
     return turnoGuardado ? JSON.parse(turnoGuardado) : TURNO.jugador1
   })
   const [ganador, setGanador] = useState(null)
+  const movimientos = tablero.filter(Boolean).length
+  const [modo, setModo] = useState(1)
+
   const updateTablero = (index) => {
     //si el cuadro ya esta seleccionado o si ya hay un ganador
     if(tablero[index] || ganador) return
@@ -32,11 +36,31 @@ function App() {
     if(nuevoGanador) {
       confetti()
       setGanador(nuevoGanador)
-      console.log('Ganador', nuevoGanador)
     } else if (comprobarEmpate(newTablero)) {
       setGanador(false)
     }
   }
+
+  const REINICIAR = () => {
+    setTablero(Array(9).fill(null))
+    setGanador(null)
+    setTurno(TURNO.jugador1)
+    window.localStorage.removeItem('tablero')
+    window.localStorage.removeItem('turno')
+  }
+
+  const handleModoJuego = (e) => {
+    const modo = parseInt(e.target.value, 10)
+    setModo(modo)
+    REINICIAR()
+  }
+
+  useEffect(() => {
+    //funcion para llamar a la cpu cuando sea su turno
+    if (modo === 1 && turno === TURNO.jugador2 && !ganador && movimientos < 9){
+      updateTablero(jugarCPU({tablero}))
+    }
+  }, [turno])
 
   return (
     <main className="tablero">
@@ -44,6 +68,11 @@ function App() {
         <h1>
           TIC TAC TOE
         </h1>
+        <h2>MODO</h2>
+        <select className="modoJuego" onChange={handleModoJuego}>
+          <option value={1}>VS CPU</option>
+          <option value={2}>COOP</option>
+        </select>
       </header>
       <section className="turno">
         <h2>TURNO</h2>
@@ -83,9 +112,14 @@ function App() {
         <button onClick={() => {
           setTablero(Array(9).fill(null))
           setGanador(null)
+          setTurno(TURNO.jugador1)
           window.localStorage.removeItem('tablero')
           window.localStorage.removeItem('turno')
-        }}>REINICIAR</button>
+        }}>REINICIO</button>
+        <div>
+          {/* historial de partidas */}
+
+        </div>
       </footer>
     </main>   
   )

@@ -14,4 +14,4 @@ export const Cuadro = ({ children, isSelected, index , updateTablero}) => {
     )
   }
 
-  export default Cuadro
+export default Cuadro

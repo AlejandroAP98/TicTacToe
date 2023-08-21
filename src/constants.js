@@ -32,5 +32,18 @@ export const validarGanador = (tableroCheck) => {
   return null
 }
 
+export  const jugarCPU = ({tablero}) => {
+  const posicionesNulas = obtenerPosicionesNulas(tablero);
+  var movimientoCPU = posicionesNulas[Math.floor(Math.random() * posicionesNulas.length)];
+  return movimientoCPU
+}
 
-
+const obtenerPosicionesNulas = (tablero) => {
+  const posicionesNulas = [];
+  tablero.forEach((valor, index) => {
+    if (valor === null) {
+      posicionesNulas.push(index);
+    }
+  });
+  return posicionesNulas;
+};
