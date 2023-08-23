@@ -4,7 +4,6 @@ import Cuadro from "./components/Cuadro"
 import { TURNO, validarGanador, comprobarEmpate, jugarCPU, textMode} from "./constants.js"
 
 
-
 function App() {
   //tablero
   const [tablero, setTablero] = useState (() => {
@@ -158,8 +157,8 @@ function App() {
       <section onClick={handleVentana}>
         {
           ganador !== null && (
-            <div className="ganador">
-              <header>
+            <div className="ganador">  
+              <header className="tada">
               {
                 ganador === false ? <h2>EMPATE</h2> : <h2>GANADOR</h2>
               }
