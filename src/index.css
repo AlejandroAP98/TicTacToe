@@ -91,6 +91,46 @@ h2{
 
 }
 
+.ultimoTablero{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1px 1px;
+  align-items: center;
+}
+
+.tablero2{
+  display: grid;
+  place-items: center;
+  width: auto;
+  height: auto;
+  margin: 20px;
+  padding: 40px;
+  background-color: #0c0c0c;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(63, 63, 63, 0.795);
+  pointer-events: none;
+}
+
+.ultimoTablero .cuadro{
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 1em;
+  border: 1px solid #ffffff;
+
+}
+
+.tablero2 h2{
+  color: #ffffff;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
 .tablero button {
   background: transparent ;
   border: 2px solid #ffffff;
@@ -174,6 +214,7 @@ footer{
   border: 1px solid #ffffff;
   background-color: #000000;
 }
+
 
 header{
   display: grid;

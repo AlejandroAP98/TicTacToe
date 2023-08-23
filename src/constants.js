@@ -1,8 +1,7 @@
 
-
 export const TURNO = {
     jugador1: '❌',
-    jugador2: '🤖'
+    jugador2: '🔵'
   }
   
 const COMB_GANADORAS = [
@@ -47,3 +46,13 @@ const obtenerPosicionesNulas = (tablero) => {
   });
   return posicionesNulas;
 };
+
+//funcion para cambiar el modo de juego y el texto del boton
+export const textMode = (modo) => {
+  if (modo === 1) {
+    return "VS CPU"
+  }else {
+    return "COOP"
+  }
+} 
+
