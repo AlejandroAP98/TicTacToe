@@ -6,13 +6,13 @@ export const TURNO = {
   
 const COMB_GANADORAS = [
     [0,1,2], // fila 1
-    [3,4,5], // fila 2
-    [6,7,8], // fila 3
+    [0,4,8], // diagonal 1
     [0,3,6], // columna 1
     [1,4,7], // columna 2
     [2,5,8], // columna 3
-    [0,4,8], // diagonal 1
     [2,4,6], // diagonal 2
+    [3,4,5], // fila 2
+    [6,7,8], // fila 3
   ]
   
 export const comprobarEmpate = (tableroCheck) => {
@@ -32,20 +32,10 @@ export const validarGanador = (tableroCheck) => {
 }
 
 export  const jugarCPU = ({tablero}) => {
-  const posicionesNulas = obtenerPosicionesNulas(tablero);
-  var movimientoCPU = posicionesNulas[Math.floor(Math.random() * posicionesNulas.length)];
+  var movimientoCPU = movimiento(tablero);
   return movimientoCPU
 }
 
-const obtenerPosicionesNulas = (tablero) => {
-  const posicionesNulas = [];
-  tablero.forEach((valor, index) => {
-    if (valor === null) {
-      posicionesNulas.push(index);
-    }
-  });
-  return posicionesNulas;
-};
 
 //funcion para cambiar el modo de juego y el texto del boton
 export const textMode = (modo) => {
@@ -56,3 +46,39 @@ export const textMode = (modo) => {
   }
 } 
 
+const movimiento = (tablero) => {
+  var posicion = [];
+  for (let i = 0; i < tablero.length - 2; i++) {
+    if (tablero[i] !== null && tablero[i] === TURNO.jugador1) {
+      posicion.push(i);
+    }
+  }
+  if (posicion.length >= 2) {
+    for (let i = 0; i < COMB_GANADORAS.length; i++) {
+      var comb = COMB_GANADORAS[i];
+      var [a,b,c] = comb;
+      //bloquear jugada ganadora del jugador 1
+      if (tablero[a] === TURNO.jugador1 && tablero[b] === TURNO.jugador1 && tablero[c] === null) {
+        return c;
+      }else if (tablero[a] === TURNO.jugador1 && tablero[b] === null && tablero[c] === TURNO.jugador1) {
+        return b;
+      }else if (tablero[a] === null && tablero[b] === TURNO.jugador1 && tablero[c] === TURNO.jugador1) {
+        return a;
+      }
+    }
+  }else if (posicion.length === 1) {
+    if (TURNO.jugador1 === tablero[4]) {
+      return 0;
+    }
+    else{
+      return 4;
+    }
+    /////// FALTA HACER EL MOVIMIENTO CUANDO NO ESTÁ EN PELIGRO DE DERROTA/
+    ////////////////////////////////
+    //  
+    //
+  }
+  
+}
+
+ 
