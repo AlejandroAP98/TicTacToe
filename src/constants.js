@@ -46,39 +46,63 @@ export const textMode = (modo) => {
   }
 } 
 
-const movimiento = (tablero) => {
-  var posicion = [];
-  for (let i = 0; i < tablero.length - 2; i++) {
+ const movimiento = (tablero) => {
+  // saber si se está en peligro de derrota 
+  var posicionBot = [];
+  for (let i = 0; i < tablero.length; i++) {
     if (tablero[i] !== null && tablero[i] === TURNO.jugador1) {
-      posicion.push(i);
+      posicionBot.push(i);
     }
   }
-  if (posicion.length >= 2) {
-    for (let i = 0; i < COMB_GANADORAS.length; i++) {
-      var comb = COMB_GANADORAS[i];
-      var [a,b,c] = comb;
-      //bloquear jugada ganadora del jugador 1
-      if (tablero[a] === TURNO.jugador1 && tablero[b] === TURNO.jugador1 && tablero[c] === null) {
-        return c;
-      }else if (tablero[a] === TURNO.jugador1 && tablero[b] === null && tablero[c] === TURNO.jugador1) {
-        return b;
-      }else if (tablero[a] === null && tablero[b] === TURNO.jugador1 && tablero[c] === TURNO.jugador1) {
-        return a;
+  if (posicionBot.length ==1){
+    if (posicionBot[0] == 4){
+      //random entre 0 2 6 8
+      var random = Math.floor(Math.random() * 4);
+      if (random == 0){
+        return 0;
+      }else if (random == 1){
+        return 2;
       }
-    }
-  }else if (posicion.length === 1) {
-    if (TURNO.jugador1 === tablero[4]) {
-      return 0;
-    }
-    else{
+      else if (random == 2){
+        return 6;
+      }
+      else if (random == 3){
+        return 8;
+      }
+    }else{
       return 4;
     }
-    /////// FALTA HACER EL MOVIMIENTO CUANDO NO ESTÁ EN PELIGRO DE DERROTA/
-    ////////////////////////////////
-    //  
-    //
   }
-  
+  for (let i=0; i<COMB_GANADORAS.length; i++) {
+    let comb = COMB_GANADORAS[i];
+    let [a,b,c] = comb;
+    if (tablero[a] === TURNO.jugador2 && tablero[b] === TURNO.jugador2 && tablero[c] === null) {
+      return c;
+    }else if (tablero[a] === TURNO.jugador2 && tablero[b] === null && tablero[c] === TURNO.jugador2) {
+      return b;
+    }else if (tablero[a] === null && tablero[b] === TURNO.jugador2 && tablero[c] === TURNO.jugador2) {
+      return a;
+    }
+  }
+  for(let i = 0; i < COMB_GANADORAS.length; i++) {
+    let comb = COMB_GANADORAS[i];
+    let [a,b,c] = comb;
+    if (tablero[a] === TURNO.jugador1 && tablero[b] === TURNO.jugador1 && tablero[c] === null) {
+      return c;
+    }else if (tablero[a] === TURNO.jugador1 && tablero[b] === null && tablero[c] === TURNO.jugador1) {
+      return b;
+    }else if (tablero[a] === null && tablero[b] === TURNO.jugador1 && tablero[c] === TURNO.jugador1) {
+      return a;
+    }
+  }
+  // hacer jugada aleatori
+  for (let i=0; i<tablero.length; i++) {
+    let x = i;
+    x = Math.floor(Math.random() * 9); 
+    if (tablero[x]=== null && x !== 0 && x !== 2 && x !== 6 && x !== 8){
+      return x;
+    }else if (tablero[x]=== null){
+      return x;
+    }
+  }
 }
-
- 
