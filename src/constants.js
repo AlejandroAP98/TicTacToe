@@ -101,7 +101,13 @@ export const textMode = (modo) => {
     x = Math.floor(Math.random() * 9); 
     if (tablero[x]=== null && x !== 0 && x !== 2 && x !== 6 && x !== 8){
       return x;
-    }else if (tablero[x]=== null){
+    }
+  }
+  // hacer jugada aleatoria en las esquinas
+  for (let i=0; i<tablero.length; i++) {
+    let x = i;
+    x = Math.floor(Math.random() * 9); 
+    if (tablero[x]=== null){
       return x;
     }
   }
